@@ -45,12 +45,16 @@
             
         </div>
         <!-- 音频 -->
-        <audio src="./file/mp3/CastleInTheSky.mp3" loop="-1" autoplay="autoplay" />
+        <audio id="audio" src="./file/mp3/CastleInTheSky.mp3" loop="-1" autoplay="autoplay" />
     <script>
     </script>
 
     <script>
     (function(){
+	
+	//解决IOS下音频不能自动播放
+        $("#audio")[0].play();
+	
         var canvas = $('#canvas');
 		
         if (!canvas[0].getContext) {
