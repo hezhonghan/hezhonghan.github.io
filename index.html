@@ -52,23 +52,37 @@
 
     <script>
     (function(){
-        //--创建页面监听，页面加载完毕--触发音频播放
-        document.addEventListener('DOMContentLoaded', function () {
-            function audioAutoPlay() {
-                var musicEle0 = document.getElementById('audio');
-                musicEle0.play();
+        var voice = document.getElementById('audio');
+        //调用 <audio> 元素提供的方法 play()
+        voice.play();
+        //判斷 WeixinJSBridge 是否存在
+        if (typeof WeixinJSBridge == "object" && typeof WeixinJSBridge.invoke == "function") {
+            voice.play();
+        } else {
+            //監聽客户端抛出事件"WeixinJSBridgeReady"
+            if (document.addEventListener) {
+                document.addEventListener("WeixinJSBridgeReady", function(){
+                    voice.play();
+                }, false);
+            } else if (document.attachEvent) {
+                document.attachEvent("WeixinJSBridgeReady", function(){
+                    voice.play();
+                });
+                document.attachEvent("onWeixinJSBridgeReady", function(){
+                    voice.play();
+                });
             }
-            audioAutoPlay();
-        });
-
-        //--创建触摸监听，当浏览器打开页面时，触摸屏幕触发事件，进行音频播放
-        document.addEventListener('touchstart', function () {
-            function audioAutoPlay() {
-                var musicEle0 = document.getElementById('audio');
-                musicEle0.play();
+        }
+        
+        //voiceStatu用來記録狀態,使 touchstart 事件只能觸發一次有效,避免與 click 事件衝突
+        var voiceStatu = true;
+        //监听 touchstart 事件进而调用 <audio> 元素提供的 play() 方法播放音频
+        document.addEventListener("touchstart",function(e){
+            if(voiceStatu){
+                voice.play();
+                voiceStatu = false;
             }
-            audioAutoPlay();
-        });
+        }, false);
 
         var canvas = $('#canvas');
 		
