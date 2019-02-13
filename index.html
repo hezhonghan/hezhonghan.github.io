@@ -53,7 +53,7 @@
     <script>
     (function(){
         //--创建页面监听，页面加载完毕--触发音频播放
-        /*document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function () {
             function audioAutoPlay() {
                 var musicEle0 = document.getElementById('audio');
                 musicEle0.play();
@@ -68,10 +68,10 @@
                 musicEle0.play();
             }
             audioAutoPlay();
-        });*/
+        });
 
-        var voice = document.getElementById('audio');
         document.addEventListener("WeixinJSBridgeReady", function () {
+	    var voice = document.getElementById('audio');
             voice.play();
         }, false);
 
